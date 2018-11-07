@@ -1,9 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
 apply plugin: 'kotlin-kapt'
-apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 28
@@ -24,7 +22,20 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Disable this line and the project compiles
+    // Leaving it in results in:
+
+    // => gw clean assemble
+    //
+    // e: /Users/cm/RealmCustomerProjects/bylazy-demo/app/build/tmp/kapt3/stubs/debug/com/example/hardts/myapplication/Test.java:9: error: cannot find symbol
+    //     private final com.example.hardts.myapplication.Test$foo$2$1 getFoo() {
+    //                                                   ^
+    //   symbol:   class Test$foo$2$1
+    //   location: package com.example.hardts.myapplication
+    // >  Task :app:kaptDebugKotlin FAILED
+    kapt 'com.jakewharton:butterknife-compiler:9.0.0-rc1'
+
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
